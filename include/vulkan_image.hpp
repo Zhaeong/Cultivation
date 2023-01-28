@@ -21,21 +21,33 @@ public:
   VkCommandPool commandPool;
   //============================
 
+  // From creation window
+  VkExtent2D swapChainExtent;
+
   VkImage textureImage;
   VkDeviceMemory textureImageMemory;
-
   VkImageView textureImageView;
-
   VkSampler textureSampler;
 
+  // Second texture
+  VkImage second_textureImage;
+  VkDeviceMemory second_textureImageMemory;
+  VkImageView second_textureImageView;
+
+  // Depth image
+  VkImage depthImage;
+  VkDeviceMemory depthImageMemory;
+  VkImageView depthImageView;
+
   VulkanImage(VkPhysicalDevice inputPhysicalDevice, VkDevice inputDevice,
-              VkQueue inputGraphicsQueue, VkCommandPool inputCommandPool);
+              VkQueue inputGraphicsQueue, VkCommandPool inputCommandPool,
+              VkExtent2D inputExtent);
   ~VulkanImage();
 
   void createImage(uint32_t width, uint32_t height, VkFormat format,
                    VkImageTiling tiling, VkImageUsageFlags usage,
                    VkMemoryPropertyFlags properties, VkImage &image,
-                   VkDeviceMemory &imageMemory);
+                   VkDeviceMemory &imageMemory, bool isExplicit);
 
   void transitionImageLayout(VkImage image, VkFormat format,
                              VkImageLayout oldLayout, VkImageLayout newLayout);
@@ -43,10 +55,11 @@ public:
   void copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width,
                          uint32_t height);
 
-  void createTextureImage();
-
-  void createTextureImageView();
+  void createTextureImage(const char *texPath, VkImage &image,
+                          VkDeviceMemory &imageMemory, bool isExplicit);
 
   void createTextureSampler();
+
+  void createDepthResources();
 };
 } // namespace VulkanStuff

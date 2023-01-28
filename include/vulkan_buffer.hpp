@@ -33,6 +33,14 @@ public:
   VkDescriptorPool descriptorPool;
   std::vector<VkDescriptorSet> descriptorSets;
 
+  // Stuff for second texture
+  VkBuffer secondUniformBuffers;
+  VkDeviceMemory secondUniformBuffersMemory;
+  VkDescriptorPool secondDescriptorPool;
+  VkDescriptorSet secondDescriptorSet;
+
+  // End of stuff for second texture
+
   // Functions
 
   VulkanBuffer(VkPhysicalDevice inputPhysicalDevice, VkDevice inputDevice,
@@ -43,9 +51,21 @@ public:
   void createIndexBuffer(std::vector<uint16_t> indices);
   void createUniformBuffers(int number);
   void createDescriptorPool(int number);
+
+  // Static since generic and can be called regardless
+  static VkDescriptorSet
+  createDescriptorSet(VkDevice device,
+                      VkDescriptorSetLayout descriptorSetLayout,
+                      VkDescriptorPool pool);
+
+  static void writeDescritorSets(VkDevice device, VkDescriptorSet descritorSet,
+                                 VkBuffer uniformBuffer, VkImageView imageView,
+                                 VkSampler sampler);
+
   void createDescriptorSets(int number,
                             VkDescriptorSetLayout descriptorSetLayout,
                             VkImageView textureImageView,
-                            VkSampler textureSampler);
+                            VkSampler textureSampler,
+                            VkImageView secondTextureImageView);
 };
 } // namespace VulkanStuff

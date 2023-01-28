@@ -8,7 +8,7 @@ Game::Game() {
   }
 
   window = SDL_CreateWindow("SDL Vulkan Sample", SDL_WINDOWPOS_CENTERED,
-                            SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT,
+                            SDL_WINDOWPOS_CENTERED, Utils::WIDTH, Utils::HEIGHT,
                             SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE);
 
   vulkanRenderer = new VulkanStuff::VulkanRenderer(window);
@@ -68,24 +68,24 @@ std::string Game::getEvent() {
         eventName = "KEY_E";
         std::cout << "Event: " << eventName << "\n";
 
-        std::vector<Utils::Vertex> vertices = {
-            {{0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
-            {{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-            {{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}};
+        // std::vector<Utils::Vertex> vertices = {
+        //     {{0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+        //     {{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+        //     {{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}};
 
-        vulkanRenderer->recreateVertexBuffer(vertices);
+        // vulkanRenderer->recreateVertexBuffer(vertices);
         break;
       }
       case SDLK_q: {
         eventName = "KEY_Q";
         std::cout << "Event: " << eventName << "\n";
 
-        std::vector<Utils::Vertex> vertices = {
-            {{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
-            {{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
-            {{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}};
+        // std::vector<Utils::Vertex> vertices = {
+        //     {{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+        //     {{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+        //     {{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}};
 
-        vulkanRenderer->recreateVertexBuffer(vertices);
+        // vulkanRenderer->recreateVertexBuffer(vertices);
         break;
       }
 
