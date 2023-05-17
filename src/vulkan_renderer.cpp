@@ -208,8 +208,10 @@ void VulkanRenderer::beginDrawingCommandBuffer(VkCommandBuffer commandBuffer) {
   if (vkResetCommandBuffer(commandBuffer, 0) != VK_SUCCESS) {
     throw std::runtime_error("failed to reset command buffer!");
   }
-  VkCommandBufferBeginInfo beginInfo{};
-  beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+
+  VkCommandBufferBeginInfo beginInfo =
+      vkinitializers::command_buffer_begin_info();
+
   // telling driver about our onetime usage
   beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 

@@ -180,8 +180,9 @@ VkCommandBuffer beginSingleTimeCommands(VkDevice device,
   vkAllocateCommandBuffers(device, &allocInfo, &commandBuffer);
 
   // Begin recording to command buffer
-  VkCommandBufferBeginInfo beginInfo{};
-  beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+  VkCommandBufferBeginInfo beginInfo =
+      vkinitializers::command_buffer_begin_info();
+
   // telling driver about our onetime usage
   beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
@@ -234,10 +235,9 @@ void createBuffer(VkPhysicalDevice physicalDevice, VkDevice device,
                   VkDeviceSize size, VkBufferUsageFlags usage,
                   VkMemoryPropertyFlags properties, VkBuffer &buffer,
                   VkDeviceMemory &bufferMemory) {
-  VkBufferCreateInfo bufferInfo{};
-  bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-  bufferInfo.size = size;
-  bufferInfo.usage = usage;
+
+  VkBufferCreateInfo bufferInfo =
+      vkinitializers::buffer_create_info(usage, size);
   bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
   if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
@@ -250,8 +250,7 @@ void createBuffer(VkPhysicalDevice physicalDevice, VkDevice device,
   VkMemoryRequirements memRequirements;
   vkGetBufferMemoryRequirements(device, buffer, &memRequirements);
 
-  VkMemoryAllocateInfo allocInfo{};
-  allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+  VkMemoryAllocateInfo allocInfo = vkinitializers::memory_allocate_info();
   allocInfo.allocationSize = memRequirements.size;
   allocInfo.memoryTypeIndex = findMemoryType(
       physicalDevice, memRequirements.memoryTypeBits, properties);

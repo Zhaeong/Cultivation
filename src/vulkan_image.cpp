@@ -90,8 +90,7 @@ void VulkanImage::createImage(uint32_t width, uint32_t height, VkFormat format,
   VkMemoryRequirements memRequirements;
   vkGetImageMemoryRequirements(device, image, &memRequirements);
 
-  VkMemoryAllocateInfo allocInfo{};
-  allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+  VkMemoryAllocateInfo allocInfo = vkinitializers::memory_allocate_info();
   allocInfo.allocationSize = memRequirements.size;
   allocInfo.memoryTypeIndex = Utils::findMemoryType(
       physicalDevice, memRequirements.memoryTypeBits, properties);
