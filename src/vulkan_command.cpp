@@ -18,8 +18,7 @@ void VulkanCommand::createCommandPool() {
   Utils::QueueFamilyIndices queueFamilyIndices =
       Utils::findQueueFamilies(physicalDevice, surface);
 
-  VkCommandPoolCreateInfo poolInfo{};
-  poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+  VkCommandPoolCreateInfo poolInfo = vkinitializers::command_pool_create_info();
   poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
   poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily.value();
 
@@ -33,11 +32,10 @@ void VulkanCommand::createCommandBuffers(uint32_t number) {
 
   commandBuffers.resize(number);
 
-  VkCommandBufferAllocateInfo allocInfo{};
-  allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-  allocInfo.commandPool = commandPool;
-  allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-  allocInfo.commandBufferCount = (uint32_t)commandBuffers.size();
+  VkCommandBufferAllocateInfo allocInfo =
+      vkinitializers::command_buffer_allocate_info(
+          commandPool, VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+          (uint32_t)commandBuffers.size());
 
   if (vkAllocateCommandBuffers(device, &allocInfo, commandBuffers.data()) !=
       VK_SUCCESS) {

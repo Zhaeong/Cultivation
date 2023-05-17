@@ -9,6 +9,7 @@
 #include <optional>
 #include <vector>
 #include <vulkan/vulkan.h>
+#include <vulkan_initializers.hpp>
 
 namespace Utils {
 static const int WIDTH = 800;

@@ -171,11 +171,10 @@ VkCommandBuffer beginSingleTimeCommands(VkDevice device,
                                         VkCommandPool commandPool) {
   // First need to allocate a temporary command buffer
   //  Can create seperate command pool, but maybe at another time
-  VkCommandBufferAllocateInfo allocInfo{};
-  allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-  allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-  allocInfo.commandPool = commandPool;
-  allocInfo.commandBufferCount = 1;
+
+  VkCommandBufferAllocateInfo allocInfo =
+      vkinitializers::command_buffer_allocate_info(
+          commandPool, VK_COMMAND_BUFFER_LEVEL_PRIMARY, 1);
 
   VkCommandBuffer commandBuffer;
   vkAllocateCommandBuffers(device, &allocInfo, &commandBuffer);
