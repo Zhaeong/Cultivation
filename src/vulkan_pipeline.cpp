@@ -17,8 +17,6 @@ VulkanPipeline::VulkanPipeline(
   vulkanRenderPass =
       new VulkanRenderPass(physicalDevice, device, swapChainImageFormat);
 
-  createDescriptorSetLayout();
-
   createGraphicsPipeline();
 }
 VulkanPipeline::~VulkanPipeline() {
@@ -28,7 +26,7 @@ VulkanPipeline::~VulkanPipeline() {
   vkDestroyPipeline(device, graphicsPipeline, nullptr);
   vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
 
-  vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
+  // vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
 }
 
 VkShaderModule
@@ -44,37 +42,6 @@ VulkanPipeline::createShaderModule(const std::vector<char> &code) {
     throw std::runtime_error("failed to create shader module!");
   }
   return shaderModule;
-}
-
-void VulkanPipeline::createDescriptorSetLayout() {
-  VkDescriptorSetLayoutBinding uboLayoutBinding{};
-  uboLayoutBinding.binding = 0;
-  uboLayoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-  uboLayoutBinding.descriptorCount = 1;
-  uboLayoutBinding.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
-  uboLayoutBinding.pImmutableSamplers = nullptr; // Optional
-
-  // Sampler
-  VkDescriptorSetLayoutBinding samplerLayoutBinding{};
-  samplerLayoutBinding.binding = 1;
-  samplerLayoutBinding.descriptorCount = 1;
-  samplerLayoutBinding.descriptorType =
-      VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-  samplerLayoutBinding.pImmutableSamplers = nullptr;
-  samplerLayoutBinding.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-
-  std::vector<VkDescriptorSetLayoutBinding> bindings = {uboLayoutBinding,
-                                                        samplerLayoutBinding};
-
-  VkDescriptorSetLayoutCreateInfo layoutInfo{};
-  layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-  layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
-  layoutInfo.pBindings = bindings.data();
-
-  if (vkCreateDescriptorSetLayout(device, &layoutInfo, nullptr,
-                                  &descriptorSetLayout) != VK_SUCCESS) {
-    throw std::runtime_error("failed to create descriptor set layout!");
-  }
 }
 
 void VulkanPipeline::createGraphicsPipeline() {
@@ -237,7 +204,10 @@ void VulkanPipeline::createGraphicsPipeline() {
   pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 
   // Descriptor set layouts
-  pipelineLayoutInfo.setLayoutCount = 1;                 // Optional
+  pipelineLayoutInfo.setLayoutCount = 1; // Optional
+
+  VkDescriptorSetLayout descriptorSetLayout =
+      vkinitializers::create_descriptorSetLayout(device);
   pipelineLayoutInfo.pSetLayouts = &descriptorSetLayout; // Optional
 
   // Push constants

@@ -19,7 +19,7 @@ public:
   //    ============================================
 
   VkPipelineLayout pipelineLayout;
-  VkDescriptorSetLayout descriptorSetLayout;
+  VkDescriptorSetLayout _descriptorSetLayout;
 
   VulkanRenderPass *vulkanRenderPass;
 
@@ -34,7 +34,6 @@ public:
                  std::vector<VkImageView> inputSwapChainImageViews);
   ~VulkanPipeline();
 
-  void createDescriptorSetLayout();
   void createGraphicsPipeline();
   VkShaderModule createShaderModule(const std::vector<char> &code);
 

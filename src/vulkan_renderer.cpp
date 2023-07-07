@@ -62,9 +62,8 @@ VulkanRenderer::VulkanRenderer(SDL_Window *sdlWindow) : window{sdlWindow} {
   vulkanBuffer->createUniformBuffers(vulkanSwapChain.imageCount);
   vulkanBuffer->createDescriptorPool(vulkanSwapChain.imageCount);
   vulkanBuffer->createDescriptorSets(
-      vulkanSwapChain.imageCount, vulkanPipeline.descriptorSetLayout,
-      vulkanImage->textureImageView, vulkanImage->textureSampler,
-      vulkanImage->second_textureImageView);
+      vulkanSwapChain.imageCount, vulkanImage->textureImageView,
+      vulkanImage->textureSampler, vulkanImage->second_textureImageView);
 }
 VulkanRenderer::~VulkanRenderer() {
   vkDeviceWaitIdle(vulkanDevice.logicalDevice);

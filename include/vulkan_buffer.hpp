@@ -62,9 +62,7 @@ public:
                                  VkBuffer uniformBuffer, VkImageView imageView,
                                  VkSampler sampler);
 
-  void createDescriptorSets(int number,
-                            VkDescriptorSetLayout descriptorSetLayout,
-                            VkImageView textureImageView,
+  void createDescriptorSets(int number, VkImageView textureImageView,
                             VkSampler textureSampler,
                             VkImageView secondTextureImageView);
 };

@@ -216,13 +216,16 @@ void VulkanBuffer::writeDescritorSets(VkDevice device,
                          descriptorWrites.data(), 0, nullptr);
 }
 
-void VulkanBuffer::createDescriptorSets(
-    int number, VkDescriptorSetLayout descriptorSetLayout,
-    VkImageView textureImageView, VkSampler textureSampler,
-    VkImageView secondTextureImageView) {
+void VulkanBuffer::createDescriptorSets(int number,
+                                        VkImageView textureImageView,
+                                        VkSampler textureSampler,
+                                        VkImageView secondTextureImageView) {
 
   // Theyve been allocated, now they need to be configured
-  // Bind uniform buffers to descriptorsi
+  // Bind uniform buffers to descriptors
+
+  VkDescriptorSetLayout descriptorSetLayout =
+      vkinitializers::create_descriptorSetLayout(device);
 
   descriptorSets.resize(number);
   for (size_t i = 0; i < number; i++) {
