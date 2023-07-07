@@ -19,7 +19,6 @@ public:
   //    ============================================
 
   VkPipelineLayout pipelineLayout;
-  VkDescriptorSetLayout _descriptorSetLayout;
 
   VulkanRenderPass *vulkanRenderPass;
 
